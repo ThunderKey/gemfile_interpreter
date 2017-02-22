@@ -12,10 +12,7 @@ class GemfileInterpreter
     true
   end
 
-  def bundler_runtime
-    raise "first use #load before #bundler_runtime" unless @bundler_runtime
-    @bundler_runtime
-  end
+  attr_reader :bundler_runtime
 
   def gems
     bundler_runtime.gems

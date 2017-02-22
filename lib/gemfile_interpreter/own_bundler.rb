@@ -3,14 +3,17 @@ require 'bundler'
 class GemfileInterpreter
   OwnBundler = Bundler.dup
 
+  class GemfileMissingError < IOError; end
+  class GemfileLockMissingError < IOError; end
+
   module OwnBundler
     class << self
       def load_gemfile gemfile
         raise ArgumentError, 'The parameter gemfile may not be empty' if gemfile.nil? || gemfile.empty?
         reset!
         @default_gemfile = Pathname.new gemfile
-        ensure_file_exists! default_gemfile
-        ensure_file_exists! default_lockfile
+        ensure_file_exists! default_gemfile, GemfileMissingError
+        ensure_file_exists! default_lockfile, GemfileLockMissingError
         load
       end
 
@@ -31,8 +34,8 @@ class GemfileInterpreter
 
       private
 
-      def ensure_file_exists! filename
-        raise IOError, "File #{filename.inspect} not found" unless File.exists? filename
+      def ensure_file_exists! filename, error_class = IOError
+        raise error_class, "File #{filename.inspect} not found" unless File.exists? filename
       end
     end
   end
