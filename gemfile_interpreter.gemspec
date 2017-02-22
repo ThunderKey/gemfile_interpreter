@@ -21,5 +21,5 @@ Gem::Specification.new do |gem|
   gem.license     = 'MIT'
   gem.homepage    = 'https://github.com/ThunderKey/gemfile_interpreter'
 
-  gem.add_dependency 'bundler', '~> 1.0'
+  gem.add_runtime_dependency 'bundler', '~> 1.0'
 end

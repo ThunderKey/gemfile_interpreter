@@ -12,11 +12,11 @@ if [nil, '--help', '-h'].include? gemfile
   print_help
 else
   type = ARGV[1]
-  GemfileInterpreter.load gemfile
+  interpreter = GemfileInterpreter.new gemfile
   if type == '--yaml'
-    puts GemfileInterpreter.to_yaml
+    puts interpreter.to_yaml
   elsif type.nil? || type == '--json'
-    puts GemfileInterpreter.to_json
+    puts interpreter.to_json
   else
     print_help
   end

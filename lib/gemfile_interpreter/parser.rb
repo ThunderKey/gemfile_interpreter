@@ -1,6 +1,6 @@
 require 'bundler'
 
-module GemfileInterpreter
+class GemfileInterpreter
   module Parser
     class << self
       def parse gems
@@ -22,10 +22,8 @@ module GemfileInterpreter
 
       def parse_source source
         source_type = if source.is_a? Bundler::Source::Rubygems
-          # normal rubygems.org
           'rubygems'
         elsif source.is_a? Bundler::Source::Git
-          # git
           'git'
         elsif source.is_a? Bundler::Source::Path
           raise NotImplementedError, "A gem from a local path is currently not supported"
