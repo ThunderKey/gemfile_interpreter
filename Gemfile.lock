@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    gemfile_interpreter (0.0.0)
+      bundler (~> 1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gemfile_interpreter!
+
+BUNDLED WITH
+   1.14.3

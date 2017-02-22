@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'gemfile_interpreter'
+
+def print_help
+  puts "Usage: #{__FILE__} GEMFILE [--json|--yaml]"
+  exit 1
+end
+
+gemfile = ARGV[0]
+if [nil, '--help', '-h'].include? gemfile
+  print_help
+else
+  type = ARGV[1]
+  GemfileInterpreter.load gemfile
+  if type == '--yaml'
+    puts GemfileInterpreter.to_yaml
+  elsif type.nil? || type == '--json'
+    puts GemfileInterpreter.to_json
+  else
+    print_help
+  end
+end
