@@ -1,3 +1,5 @@
+require 'bundler'
+
 module GemfileInterpreter
   module Parser
     class << self
@@ -25,6 +27,8 @@ module GemfileInterpreter
         elsif source.is_a? Bundler::Source::Git
           # git
           'git'
+        elsif source.is_a? Bundler::Source::Path
+          raise NotImplementedError, "A gem from a local path is currently not supported"
         else
           raise "unknown type #{source.inspect}"
         end

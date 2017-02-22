@@ -1,6 +1,6 @@
 require 'gemfile_interpreter/version'
 require 'gemfile_interpreter/parser'
-require 'bundler'
+require 'gemfile_interpreter/own_bundler'
 require 'json'
 require 'yaml'
 
@@ -12,13 +12,8 @@ module GemfileInterpreter
       ensure_file_exists! @gemfile
       ensure_file_exists! "#{@gemfile}.lock"
       @parsed = nil
-      @bundler_runtime = begin
-        with_gemfile do
-          Bundler.settings.temporary(no_install: true) do
-            Bundler.load
-          end
-        end
-      end
+      OwnBundler.setup @gemfile
+      @bundler_runtime = OwnBundler.load
       true
     end
 
@@ -40,22 +35,6 @@ module GemfileInterpreter
     end
 
     private
-
-    def with_gemfile &block
-      previous = gemfile_env
-      self.gemfile_env = @gemfile
-      block.call
-    ensure
-      self.gemfile_env = previous
-    end
-
-    def gemfile_env
-      ENV['BUNDLE_GEMFILE']
-    end
-
-    def gemfile_env= gemfile
-      ENV['BUNDLE_GEMFILE'] = gemfile
-    end
 
     def ensure_file_exists! filename
       raise IOError, "File #{filename.inspect} not found" unless File.exists? filename

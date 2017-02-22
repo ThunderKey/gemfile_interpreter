@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
     lib/gemfile_interpreter.rb
     lib/gemfile_interpreter/version.rb
     lib/gemfile_interpreter/parser.rb
+    lib/gemfile_interpreter/own_bundler.rb
   }
   gem.require_path = 'lib'
   gem.executables << 'gemfile_interpreter'
