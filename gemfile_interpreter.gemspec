@@ -2,8 +2,8 @@ require File.expand_path('../lib/gemfile_interpreter/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name        = 'gemfile_interpreter'
-  gem.version     = '0.0.0'
-  gem.date        = '2010-04-28'
+  gem.version     = GemfileInterpreter::VERSION
+  gem.date        = '2017-02-22'
   gem.summary     = 'Gemfile Interpreter'
   gem.description = 'A tool to interpret the Gemfile without installing it'
   gem.authors     = ['Nicolas Ganz']
