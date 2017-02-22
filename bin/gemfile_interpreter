@@ -1,23 +1,45 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 require 'gemfile_interpreter'
 
-def print_help
-  puts "Usage: #{__FILE__} GEMFILE [--json|--yaml]"
-  exit 1
+options = {}
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: #{__FILE__} PATH_TO_PROJECT [options]"
+  opts.on '--yaml', 'Change the output from json to yaml' do
+    options[:yaml] = true
+  end
+  opts.on '--gemfile=GEMFILE', 'The name of the Gemfile (default: Gemfile)' do |gemfile|
+    options[:gemfile] = gemfile
+  end
+  opts.on '--lockfile=GEMFILE', 'The name of the Gemfile.lock (default: %GEMFILE%.lock where %GEMFILE% is replaced with the Gemfile setting)' do |lockfile|
+    options[:lockfile] = lockfile
+  end
+  opts.on '-h', '--help', 'Prints this message' do
+    puts opts
+    exit
+  end
 end
+parser.parse!
+options[:gemfile] ||= 'Gemfile'
+options[:lockfile] ||= '%GEMFILE%.lock'
+options[:lockfile].gsub! '%GEMFILE%', options[:gemfile]
 
-gemfile = ARGV[0]
-if [nil, '--help', '-h'].include? gemfile
-  print_help
+dir = ARGV.pop
+
+#def print_help
+#  puts "Usage: #{__FILE__} GEMFILE [--json|--yaml]"
+#  exit 1
+#end
+
+if dir.nil? || dir =~ /\A\s*\Z/
+  puts parser
+  #print_help
 else
-  type = ARGV[1]
-  interpreter = GemfileInterpreter.new gemfile
-  if type == '--yaml'
+  interpreter = GemfileInterpreter.new dir, gemfile: options[:gemfile], lockfile: options[:lockfile]
+  if options[:yaml]
     puts interpreter.to_yaml
-  elsif type.nil? || type == '--json'
-    puts interpreter.to_json
   else
-    print_help
+    puts interpreter.to_json
   end
 end

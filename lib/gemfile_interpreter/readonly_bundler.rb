@@ -1,31 +1,29 @@
 require 'bundler'
 
 class GemfileInterpreter
-  OwnBundler = Bundler.dup
+  ReadonlyBundler = Bundler.dup
 
   class GemfileMissingError < IOError; end
   class GemfileLockMissingError < IOError; end
 
-  module OwnBundler
+  module ReadonlyBundler
     class << self
-      def load_gemfile gemfile
+      def load_gemfile gemfile, lockfile
         raise ArgumentError, 'The parameter gemfile may not be empty' if gemfile.nil? || gemfile.empty?
         reset!
         @default_gemfile = Pathname.new gemfile
+        @default_lockfile = Pathname.new lockfile
         ensure_file_exists! default_gemfile, GemfileMissingError
         ensure_file_exists! default_lockfile, GemfileLockMissingError
         load
       end
 
       def default_gemfile
-        @default_gemfile || raise("First call #setup")
+        @default_gemfile || raise("First call #load_gemfile")
       end
 
       def default_lockfile
-        case default_gemfile.basename.to_s
-        when "gems.rb" then Pathname.new(default_gemfile.sub(/.rb$/, ".locked"))
-        else Pathname.new("#{default_gemfile}.lock")
-        end.untaint
+        @default_lockfile || raise("First call #load_gemfile")
       end
 
       def default_bundle_dir
