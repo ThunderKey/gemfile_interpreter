@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gemfile_interpreter (0.0.4)
+    gemfile_interpreter (0.0.5)
       bundler (~> 1.0)
 
 GEM
