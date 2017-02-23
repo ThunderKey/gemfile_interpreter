@@ -44,7 +44,6 @@ RSpec.describe GemfileInterpreter do
       rubygems_gem('omniauth', '1.6.1'),
       rubygems_gem('omniauth-oauth2', '1.3.1'),
       git_gem('omniauth-keltec', '0.0.1', 'https://github.com/ThunderKey/omniauth-keltec.git', 'd954a55459b48cb56be4dbbcaa1fd2afc113db5b'),
-      rubygems_gem('bundler', '1.14.3'),
     ]
   end
 
@@ -87,7 +86,6 @@ RSpec.describe GemfileInterpreter do
       rubygems_gem('omniauth', '1.6.1'),
       rubygems_gem('omniauth-oauth2', '1.3.1'),
       git_gem('omniauth-keltec', '0.0.1', 'https://github.com/ThunderKey/omniauth-keltec.git', 'd954a55459b48cb56be4dbbcaa1fd2afc113db5b'),
-      rubygems_gem('bundler', '1.14.3'),
     ]
   end
 
