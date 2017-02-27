@@ -3,20 +3,21 @@ require 'bundler'
 class GemfileInterpreter
   module Parser
     class << self
-      def parse gems
+      def parse gems, dependencies
         hash = {}
         gems.each do |gem|
-          hash[gem.name] = parse_gem gem
+          hash[gem.name] = parse_gem gem, dependencies
         end
         hash
       end
 
-      def parse_gem gem
+      def parse_gem gem, dependencies
         hash = {}
         [:version, :full_name, :platform, :remote].map do |method|
           hash[method.to_s] = gem.send(method).to_s
         end
         hash['source'] = parse_source gem.source
+        hash['in_gemfile'] = dependencies.any? {|d| d.name == gem.name }
         hash
       end
 

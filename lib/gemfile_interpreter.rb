@@ -9,14 +9,14 @@ class GemfileInterpreter
     gemfile_path = File.join dir, gemfile
     lockfile_path = File.join dir, (lockfile || "#{gemfile}.lock")
     @parsed = nil
-    @gems = ReadonlyBundler.load_gemfile gemfile_path, lockfile_path
+    @gems, @dependencies = ReadonlyBundler.load_gemfile gemfile_path, lockfile_path
     true
   end
 
-  attr_reader :gems
+  attr_reader :gems, :dependencies
 
   def parsed
-    @parsed = Parser.parse gems
+    @parsed = Parser.parse gems, dependencies
   end
 
   def to_json

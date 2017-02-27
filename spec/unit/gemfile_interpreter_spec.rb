@@ -33,7 +33,7 @@ RSpec.describe GemfileInterpreter do
       rubygems_gem('railties', '5.0.1'),
       rubygems_gem('responders', '2.3.0'),
       rubygems_gem('warden', '1.2.7'),
-      rubygems_gem('devise', '4.2.0'),
+      rubygems_gem('devise', '4.2.0', true),
       rubygems_gem('multipart-post', '2.0.0'),
       rubygems_gem('faraday', '0.10.1'),
       rubygems_gem('hashie', '3.5.3'),
@@ -43,7 +43,7 @@ RSpec.describe GemfileInterpreter do
       rubygems_gem('oauth2', '1.3.0'),
       rubygems_gem('omniauth', '1.6.1'),
       rubygems_gem('omniauth-oauth2', '1.3.1'),
-      git_gem('omniauth-keltec', '0.0.1', 'https://github.com/ThunderKey/omniauth-keltec.git', 'd954a55459b48cb56be4dbbcaa1fd2afc113db5b'),
+      git_gem('omniauth-keltec', '0.0.1', 'https://github.com/ThunderKey/omniauth-keltec.git', 'd954a55459b48cb56be4dbbcaa1fd2afc113db5b', true),
     ]
   end
 
@@ -75,7 +75,7 @@ RSpec.describe GemfileInterpreter do
       rubygems_gem('railties', '5.0.1'),
       rubygems_gem('responders', '2.3.0'),
       rubygems_gem('warden', '1.2.7'),
-      rubygems_gem('devise', '4.2.0'),
+      rubygems_gem('devise', '4.2.0', true),
       rubygems_gem('multipart-post', '2.0.0'),
       rubygems_gem('faraday', '0.10.1'),
       rubygems_gem('hashie', '3.5.3'),
@@ -85,7 +85,7 @@ RSpec.describe GemfileInterpreter do
       rubygems_gem('oauth2', '1.3.0'),
       rubygems_gem('omniauth', '1.6.1'),
       rubygems_gem('omniauth-oauth2', '1.3.1'),
-      git_gem('omniauth-keltec', '0.0.1', 'https://github.com/ThunderKey/omniauth-keltec.git', 'd954a55459b48cb56be4dbbcaa1fd2afc113db5b'),
+      git_gem('omniauth-keltec', '0.0.1', 'https://github.com/ThunderKey/omniauth-keltec.git', 'd954a55459b48cb56be4dbbcaa1fd2afc113db5b', true),
     ]
   end
 
@@ -104,15 +104,15 @@ RSpec.describe GemfileInterpreter do
 
   private
 
-  def rubygems_gem name, version
-    gem name, version, {'type' => 'rubygems', 'remotes' => ['https://rubygems.org/']}
+  def rubygems_gem name, version, in_gemfile = false
+    gem name, version, {'type' => 'rubygems', 'remotes' => ['https://rubygems.org/']}, in_gemfile
   end
 
-  def git_gem name, version, uri, revision
-    gem name, version, {'type' => 'git', 'revision' => revision, 'uri' => uri}
+  def git_gem name, version, uri, revision, in_gemfile = false
+    gem name, version, {'type' => 'git', 'revision' => revision, 'uri' => uri}, in_gemfile
   end
 
-  def gem name, version, source
-    [name, {'version' => version, 'full_name' => "#{name}-#{version}", 'platform' => 'ruby', 'remote' => '', 'source' => source}]
+  def gem name, version, source, in_gemfile
+    [name, {'version' => version, 'full_name' => "#{name}-#{version}", 'platform' => 'ruby', 'remote' => '', 'source' => source, 'in_gemfile' => in_gemfile}]
   end
 end

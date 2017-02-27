@@ -15,7 +15,7 @@ class GemfileInterpreter
         @default_lockfile = Pathname.new lockfile
         ensure_file_exists! default_gemfile, GemfileMissingError
         ensure_file_exists! default_lockfile, GemfileLockMissingError
-        definition.resolve
+        return definition.resolve, definition.dependencies
       end
 
       def default_gemfile
