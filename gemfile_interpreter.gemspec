@@ -18,4 +18,5 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'bundler', '~> 1.0'
   gem.add_development_dependency 'rspec', '~> 3.0'
+  gem.add_development_dependency 'pry', '~> 0'
 end
